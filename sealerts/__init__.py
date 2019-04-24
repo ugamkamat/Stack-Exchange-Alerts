@@ -37,17 +37,18 @@ class alertnotify:
 
         for elements in summary_all:
             summary_list = elements.get_text().split()
-            summary_list[0] = summary_list[0][:3]
+            summary_list[0] = summary_list[0][3:]
             count = 0
             for summ in summary_list:
-                if summ.endswith('</p'):
+                if summ.endswith('</p>'):
                     break
                 count += 1
-            summary.append(''.join(summary_list[:count]))
+            summary_list[count] = summary_list[count][:-4]
+            summary.append(' '.join(summary_list[:(count+1)]))
         return title[1:], link[2:], summary
 
     def initialize_data_file(self):
-        title, link, summary = alertnotify.get_current_data(self)
+        title = alertnotify.get_current_data(self)[0]
         with open(self.file_name_with_path, 'w') as f:
             for i in range(len(title)):
                 f.write(title[i] + '\n')
