@@ -43,8 +43,11 @@ class alertnotify:
                 if summ.endswith('</p>'):
                     break
                 count += 1
-            summary_list[count] = summary_list[count][:-4]
-            summary.append(' '.join(summary_list[:(count+1)]))
+            try:
+                summary_list[count] = summary_list[count][:-4]
+                summary.append(' '.join(summary_list[:(count+1)]))
+            except IndexError:
+                continue
         return title[1:], link[2:], summary
 
     def initialize_data_file(self):
